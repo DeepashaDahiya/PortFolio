@@ -9,7 +9,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   
   <!-- GSAP Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -1213,49 +1213,162 @@
     }
     .footer-back:hover { color: var(--amber); }
 
-    /* ─── LOADER ─── */
+    /* ─── ARTISTIC PICTORIAL LOADER ─── */
     #loader {
       position: fixed;
       inset: 0;
-      background: var(--bg);
-      z-index: 9000;
+      background: radial-gradient(circle at center, #14110b 0%, #090806 100%);
+      z-index: 99999;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 2rem;
+      overflow: hidden;
+      transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1), transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+    .loader-aura {
+      position: absolute;
+      width: 440px;
+      height: 440px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212, 168, 83, 0.14) 0%, rgba(200, 133, 90, 0.04) 50%, transparent 70%);
+      filter: blur(50px);
+      animation: auraPulse 4s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes auraPulse {
+      0% { transform: scale(0.85); opacity: 0.5; }
+      100% { transform: scale(1.2); opacity: 0.9; }
+    }
+    .loader-artistic-wrap {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.2rem;
+      z-index: 2;
+    }
+    .loader-pictorial {
+      width: 140px;
+      height: 140px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .loader-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 20px rgba(212, 168, 83, 0.25));
+    }
+    .loader-diamond {
+      animation: diamondSpin 18s linear infinite;
+      transform-origin: 80px 80px;
+    }
+    .loader-diamond-inner {
+      animation: diamondSpinRev 14s linear infinite;
+      transform-origin: 80px 80px;
+    }
+    .loader-orbit-1 {
+      animation: orbitRotate 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      transform-origin: 80px 80px;
+    }
+    .loader-orbit-2 {
+      animation: orbitRotateRev 4.5s linear infinite;
+      transform-origin: 80px 80px;
+    }
+    @keyframes diamondSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes diamondSpinRev {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+    @keyframes orbitRotate {
+      0% { transform: rotate(0deg); stroke-dashoffset: 0; }
+      50% { transform: rotate(180deg); stroke-dashoffset: 80; }
+      100% { transform: rotate(360deg); stroke-dashoffset: 0; }
+    }
+    @keyframes orbitRotateRev {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+    .loader-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+      width: 290px;
     }
     .loader-name {
       font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      letter-spacing: 0.05em;
-      overflow: hidden;
-    }
-    .loader-name span {
-      display: inline-block;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      color: var(--cream);
+      text-transform: uppercase;
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(10px);
+      animation: loaderFadeIn 0.8s ease forwards 0.2s;
+    }
+    .loader-status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      color: var(--amber);
+      text-transform: uppercase;
+      height: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.25s ease;
+    }
+    @keyframes loaderFadeIn {
+      to { opacity: 1; transform: translateY(0); }
     }
     .loader-bar-wrap {
-      width: 220px;
-      height: 2px;
-      background: var(--border);
+      width: 100%;
+      height: 3px;
+      background: rgba(212, 168, 83, 0.12);
+      border-radius: 3px;
       position: relative;
-      overflow: hidden;
-      border-radius: 1px;
+      overflow: visible;
     }
     .loader-bar {
       position: absolute;
       top: 0; left: 0; bottom: 0;
-      width: 0;
-      background: var(--amber);
-      transition: width 0.05s linear;
+      width: 0%;
+      background: linear-gradient(90deg, var(--amber-dim), var(--amber-light));
+      border-radius: 3px;
+      transition: width 0.08s linear;
+      box-shadow: 0 0 12px rgba(212, 168, 83, 0.6);
+    }
+    .loader-glow-head {
+      position: absolute;
+      top: -3px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--cream);
+      box-shadow: 0 0 10px var(--amber), 0 0 20px var(--amber);
+      left: 0%;
+      transform: translateX(-50%);
+      transition: left 0.08s linear;
+    }
+    .loader-meta {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
     }
     .loader-num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      color: var(--amber);
+      color: var(--amber-light);
+      font-weight: 600;
     }
 
     /* ─── RESPONSIVE BREAKPOINTS ─── */
@@ -1328,13 +1441,63 @@
   <!-- TOAST NOTIFICATION -->
   <div id="toast"><span>✓</span> <span id="toastMsg">Action successful</span></div>
 
-  <!-- LOADER -->
+  <!-- ARTISTIC PICTORIAL LOADER -->
   <div id="loader">
-    <div class="loader-name">
-      <span>D</span><span>e</span><span>e</span><span>p</span><span>a</span><span>s</span><span>h</span><span>a</span>
+    <div class="loader-aura"></div>
+
+    <div class="loader-artistic-wrap">
+      <!-- Animated SVG Pictorial Crest -->
+      <div class="loader-pictorial">
+        <svg class="loader-svg" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f6f1e8"/>
+              <stop offset="50%" stop-color="#d4a853"/>
+              <stop offset="100%" stop-color="#8a6a2e"/>
+            </linearGradient>
+            <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          <!-- Outer Pulsing Geometric Diamond -->
+          <polygon class="loader-diamond" points="80,10 150,80 80,150 10,80" fill="none" stroke="rgba(212, 168, 83, 0.25)" stroke-width="1.2"/>
+          <polygon class="loader-diamond-inner" points="80,24 136,80 80,136 24,80" fill="none" stroke="rgba(212, 168, 83, 0.45)" stroke-width="1" stroke-dasharray="6 4"/>
+          
+          <!-- Orbiting Satellite Rings -->
+          <circle class="loader-orbit-1" cx="80" cy="80" r="48" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" stroke-dasharray="100 200"/>
+          <circle class="loader-orbit-2" cx="80" cy="80" r="36" fill="none" stroke="var(--amber)" stroke-width="1" stroke-dasharray="60 160"/>
+          
+          <!-- Constellation Nodes -->
+          <circle cx="80" cy="10" r="3.2" fill="#d4a853" filter="url(#goldGlow)"/>
+          <circle cx="150" cy="80" r="3.2" fill="#d4a853" filter="url(#goldGlow)"/>
+          <circle cx="80" cy="150" r="3.2" fill="#d4a853" filter="url(#goldGlow)"/>
+          <circle cx="10" cy="80" r="3.2" fill="#d4a853" filter="url(#goldGlow)"/>
+
+          <!-- Central Monogram DD -->
+          <text x="80" y="88" text-anchor="middle" font-family="'Playfair Display', serif" font-weight="700" font-size="24" fill="url(#goldGrad)" letter-spacing="1">DD</text>
+        </svg>
+      </div>
+
+      <div class="loader-info">
+        <div class="loader-name">DEEPASHA DAHIYA</div>
+        <div class="loader-status" id="loaderStatus">✦ Initializing Architecture</div>
+        
+        <div class="loader-bar-wrap">
+          <div class="loader-bar" id="loaderBar"></div>
+          <div class="loader-glow-head" id="loaderGlowHead"></div>
+        </div>
+
+        <div class="loader-meta">
+          <span class="loader-sub">B.TECH CSE (AI) · IGDTUW</span>
+          <span class="loader-num" id="loaderNum">00%</span>
+        </div>
+      </div>
     </div>
-    <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
-    <div class="loader-num" id="loaderNum">0%</div>
   </div>
 
   <!-- NAVIGATION -->
@@ -1538,7 +1701,7 @@
     </div>
   </section>
 
-  <!-- SKILLS SECTION (CLEAN & STRUCTURED CATEGORIES) -->
+  <!-- SKILLS SECTION (CLEAN 4-CATEGORY SYSTEM) -->
   <section id="skills">
     <div class="section-label">Technical stack</div>
     <h2 class="section-title">Tools &amp;<br><em>technologies</em></h2>
@@ -1825,39 +1988,51 @@
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    // ─── LOADER ───
+    // ─── ARTISTIC PICTORIAL LOADER ENGINE ───
     (function initLoader() {
       const bar = document.getElementById('loaderBar');
+      const glowHead = document.getElementById('loaderGlowHead');
       const num = document.getElementById('loaderNum');
+      const status = document.getElementById('loaderStatus');
       const loader = document.getElementById('loader');
-      const chars = document.querySelectorAll('.loader-name span');
       let progress = 0;
 
-      chars.forEach((c, i) => {
-        setTimeout(() => {
-          c.style.transition = 'all 0.4s cubic-bezier(0.16,1,0.3,1)';
-          c.style.opacity = '1';
-          c.style.transform = 'translateY(0)';
-        }, i * 70);
-      });
+      const milestones = [
+        { threshold: 0, text: '✦ Initializing Architecture' },
+        { threshold: 25, text: '✦ Loading Neural Models' },
+        { threshold: 55, text: '✦ Compiling Full-Stack Modules' },
+        { threshold: 85, text: '✦ Calibrating Experiences' },
+        { threshold: 100, text: '✦ Systems Ready' }
+      ];
 
       const interval = setInterval(() => {
-        progress += Math.random() * 20 + 8;
+        progress += Math.random() * 14 + 5;
         if (progress >= 100) {
           progress = 100;
           clearInterval(interval);
+          status.textContent = '✦ Welcome';
           setTimeout(() => {
-            loader.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            loader.style.transition = 'opacity 0.75s cubic-bezier(0.77, 0, 0.175, 1), transform 0.75s cubic-bezier(0.77, 0, 0.175, 1)';
             loader.style.opacity = '0';
-            loader.style.transform = 'translateY(-20px)';
+            loader.style.transform = 'scale(1.03) translateY(-18px)';
             setTimeout(() => {
               loader.style.display = 'none';
               initAnimations();
-            }, 600);
-          }, 200);
+            }, 750);
+          }, 300);
         }
-        bar.style.width = Math.min(progress, 100) + '%';
-        num.textContent = Math.floor(Math.min(progress, 100)) + '%';
+        
+        for (let i = milestones.length - 1; i >= 0; i--) {
+          if (progress >= milestones[i].threshold) {
+            status.textContent = milestones[i].text;
+            break;
+          }
+        }
+
+        const clamped = Math.min(progress, 100);
+        bar.style.width = clamped + '%';
+        if (glowHead) glowHead.style.left = clamped + '%';
+        num.textContent = String(Math.floor(clamped)).padStart(2, '0') + '%';
       }, 50);
     })();
 
